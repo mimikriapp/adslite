@@ -268,7 +268,13 @@ public class InterstitialAd {
                                 Log.d(TAG, "startapp interstitial null");
                             }
                             break;
-
+                        case Constant.IRONSOURCE:
+                            if (IronSource.isInterstitialReady()) {
+                                IronSource.showInterstitial(ironSourceInterstitialId);
+                            } else {
+                                showBackupInterstitialAd();
+                            }
+                            break;
 
 
                     }
