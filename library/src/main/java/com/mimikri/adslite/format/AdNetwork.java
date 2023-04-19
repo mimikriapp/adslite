@@ -138,7 +138,20 @@ public class AdNetwork {
                         IronSource.setUserId(advertisingId);
                         IronSource.init(activity, ironSourceAppKey);
                         break;
+                    case Constant.UNITY:
+                        UnityAds.initialize(activity, unityGameId,debug, new IUnityAdsInitializationListener() {
+                            @Override
+                            public void onInitializationComplete() {
+                                Log.e(TAG, "Unity Ads initialization Complete ");
+                            }
 
+                            @Override
+                            public void onInitializationFailed(UnityAds.UnityAdsInitializationError error, String message) {
+                                Log.e(TAG, "Unity Ads initialization failed: [" + error + "] " + message);
+                            }
+                        });
+
+                        break;
                     case Constant.NONE:
                         //do nothing
                         break;
