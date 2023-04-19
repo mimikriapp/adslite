@@ -119,7 +119,9 @@ public class BannerAd {
                         Banner banner = new Banner(activity, new BannerListener() {
                             @Override
                             public void onReceiveAd(View banner) {
-                                startAppAdView.setVisibility(View.VISIBLE);
+                                if (adNetwork.equals(Constant.STARTAPP)) {
+                                    startAppAdView.setVisibility(View.VISIBLE);
+                                }
                             }
 
                             @Override
