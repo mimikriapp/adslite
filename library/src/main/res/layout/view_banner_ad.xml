@@ -5,6 +5,19 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/unity_banner_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/ironsource_banner_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <RelativeLayout
         android:id="@+id/startapp_banner_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,19 +47,6 @@
 
     <RelativeLayout
         android:id="@+id/pangle_banner_view_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:visibility="gone" />
-
-    <FrameLayout
-        android:id="@+id/ironsource_banner_view_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-
-    <RelativeLayout
-        android:id="@+id/unity_banner_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
