@@ -3,7 +3,7 @@ package com.mimikri.adslitedemo;
 public class Constant {
 
     public static final String AD_STATUS = "1";
-    public static final String AD_NETWORK = "ironsource";
+    public static final String AD_NETWORK = "unity";
     public static final String BACKUP_AD_NETWORK = "none";
 
 

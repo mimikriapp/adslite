@@ -1,6 +1,7 @@
 package com.mimikri.adslitedemo;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +13,7 @@ import com.mimikri.adslite.format.MediumRectangleAd;
 import com.mimikri.adslite.format.NativeAd;
 
 
+
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -21,6 +23,18 @@ public class MainActivity extends AppCompatActivity {
     InterstitialAd.Builder interstitialAd;
     NativeAd.Builder nativeAd;
 
+
+    private String unityGameID = "1234567";
+    private Boolean testMode = true;
+    String topAdUnitId = "topBanner";
+    String bottomAdUnitId = "bottomBanner";
+
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +43,12 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        initAds();
-        loadBannerAd();
-        loadInterstitialAd();
-        loadNativeAd();
+
+
+       initAds();
+      loadBannerAd();
+      loadInterstitialAd();
+       loadNativeAd();
 
         findViewById(R.id.btn_interstitial).setOnClickListener(v -> {
            // startActivity(new Intent(getApplicationContext(), SecondActivity.class));
@@ -40,7 +56,30 @@ public class MainActivity extends AppCompatActivity {
            // bannerAd.destroyAndDetachBanner();
         });
 
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void initAds() {
         adNetwork = new AdNetwork.Initialize(this)

@@ -13,6 +13,10 @@ import com.mimikri.adslite.util.Constant;
 import com.startapp.sdk.adsbase.Ad;
 import com.startapp.sdk.adsbase.StartAppAd;
 import com.startapp.sdk.adsbase.adlisteners.AdEventListener;
+import com.unity3d.ads.IUnityAdsLoadListener;
+import com.unity3d.ads.IUnityAdsShowListener;
+import com.unity3d.ads.UnityAds;
+import com.unity3d.ads.UnityAdsShowOptions;
 
 public class InterstitialAd {
 
@@ -178,6 +182,28 @@ public class InterstitialAd {
                         });
                         IronSource.loadInterstitial();
                         break;
+
+                    case Constant.UNITY:
+                    IUnityAdsLoadListener loadListener = new IUnityAdsLoadListener() {
+                        @Override
+                        public void onUnityAdsAdLoaded(String placementId) {
+                            Log.e(TAG, "onUnityAdsAdLoaded " + placementId );
+                        }
+
+                        @Override
+                        public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
+                            Log.e(TAG, "Unity Ads failed to load ad for " + placementId + " with error: [" + error + "] " + message);
+                            loadBackupInterstitialAd();
+                        }};
+                        UnityAds.load(unityInterstitialId, loadListener);
+
+
+                        break;
+
+                    case Constant.NONE:
+                        //do nothing
+                        break;
+
                 }
             }
         }
@@ -245,6 +271,22 @@ public class InterstitialAd {
                         IronSource.loadInterstitial();
                         break;
 
+                    case Constant.UNITY:
+                        IUnityAdsLoadListener loadListener = new IUnityAdsLoadListener() {
+                            @Override
+                            public void onUnityAdsAdLoaded(String placementId) {
+                                Log.e(TAG, "onUnityAdsAdLoaded " + placementId );
+                            }
+
+                            @Override
+                            public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
+                                Log.e(TAG, "Unity Ads failed to load ad for " + placementId + " with error: [" + error + "] " + message);
+                            }};
+                        UnityAds.load(unityInterstitialId, loadListener);
+
+
+                        break;
+
                     case Constant.NONE:
                         //do nothing
                         break;
@@ -275,7 +317,34 @@ public class InterstitialAd {
                                 showBackupInterstitialAd();
                             }
                             break;
+                        case Constant.UNITY:
+                            UnityAds.show(activity, unityInterstitialId, new UnityAdsShowOptions(), new IUnityAdsShowListener() {
+                                @Override
+                                public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
+                                    Log.e(TAG, "onUnityAdsShowFailure: " + error + " - " + message);
+                                    showBackupInterstitialAd();
+                                }
 
+                                @Override
+                                public void onUnityAdsShowStart(String placementId) {
+                                    Log.v(TAG, "onUnityAdsShowStart: " + placementId);
+                                }
+
+                                @Override
+                                public void onUnityAdsShowClick(String placementId) {
+                                    Log.v(TAG,"onUnityAdsShowClick: " + placementId);
+                                }
+
+                                @Override
+                                public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
+                                    Log.v(TAG,"onUnityAdsShowComplete: " + placementId);
+
+                                }
+                            });
+                            break;
+                        case Constant.NONE:
+                            //do nothing
+                            break;
 
                     }
                     counter = 1;
@@ -304,6 +373,30 @@ public class InterstitialAd {
                         }
                         break;
 
+                    case Constant.UNITY:
+                        UnityAds.show(activity, unityInterstitialId, new UnityAdsShowOptions(), new IUnityAdsShowListener() {
+                            @Override
+                            public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
+                                Log.e(TAG, "onUnityAdsShowFailure: " + error + " - " + message);
+                            }
+
+                            @Override
+                            public void onUnityAdsShowStart(String placementId) {
+                                Log.v(TAG, "onUnityAdsShowStart: " + placementId);
+                            }
+
+                            @Override
+                            public void onUnityAdsShowClick(String placementId) {
+                                Log.v(TAG,"onUnityAdsShowClick: " + placementId);
+                            }
+
+                            @Override
+                            public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
+                                Log.v(TAG,"onUnityAdsShowComplete: " + placementId);
+
+                            }
+                        });
+                        break;
                     case Constant.NONE:
                         //do nothing
                         break;

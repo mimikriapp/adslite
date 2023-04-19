@@ -10,6 +10,8 @@ import com.mimikri.adslite.util.Constant;
 
 import com.startapp.sdk.adsbase.StartAppAd;
 import com.startapp.sdk.adsbase.StartAppSDK;
+import com.unity3d.ads.IUnityAdsInitializationListener;
+import com.unity3d.ads.UnityAds;
 
 
 public class AdNetwork {
@@ -98,8 +100,25 @@ public class AdNetwork {
                         String advertisingId = IronSource.getAdvertiserId(activity);
                         IronSource.setUserId(advertisingId);
                         IronSource.init(activity, ironSourceAppKey);
+                        break;
+
+                    case Constant.UNITY:
+                        UnityAds.initialize(activity, unityGameId,debug, new IUnityAdsInitializationListener() {
+                            @Override
+                            public void onInitializationComplete() {
+                                Log.e(TAG, "Unity Ads initialization Complete ");
+                            }
+
+                            @Override
+                            public void onInitializationFailed(UnityAds.UnityAdsInitializationError error, String message) {
+                                Log.e(TAG, "Unity Ads initialization failed: [" + error + "] " + message);
+                            }
+                        });
 
                         break;
+
+
+
                 }
                 Log.d(TAG, "[" + adNetwork + "] is selected as Primary Ads");
             }

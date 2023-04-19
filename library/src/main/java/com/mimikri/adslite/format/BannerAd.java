@@ -14,6 +14,9 @@ import com.mimikri.adslite.R;
 
 import com.startapp.sdk.ads.banner.Banner;
 import com.startapp.sdk.ads.banner.BannerListener;
+import com.unity3d.services.banners.BannerErrorInfo;
+import com.unity3d.services.banners.BannerView;
+import com.unity3d.services.banners.UnityBannerSize;
 
 public class BannerAd {
 
@@ -26,6 +29,7 @@ public class BannerAd {
         private RelativeLayout pangleBannerView;
         private IronSourceBannerLayout ironSourceBannerLayout;
       //  private PAGBannerAd mPAGBannerAd;
+        BannerView bannerview;
 
         private String adStatus = "";
         private String adNetwork = "";
@@ -186,6 +190,35 @@ public class BannerAd {
                         }
                         break;
 
+                    case Constant.UNITY:
+                        RelativeLayout unitylyt = activity.findViewById(R.id.unity_banner_view_container);
+                        BannerView.IListener bannerListener = new BannerView.IListener() {
+                            @Override
+                            public void onBannerLoaded(BannerView bannerAdView) {
+                                Log.v(TAG, "onBannerLoaded: " + bannerAdView.getPlacementId());
+                                unitylyt.setVisibility(View.VISIBLE);
+                            }
+                            @Override
+                            public void onBannerFailedToLoad(BannerView bannerAdView, BannerErrorInfo errorInfo) {
+                                Log.e(TAG, "Unity Ads failed to load banner for " + bannerAdView.getPlacementId() + " with error: [" + errorInfo.errorCode + "] " + errorInfo.errorMessage);
+                                unitylyt.setVisibility(View.GONE);
+                                loadBackupBannerAd();
+                            }
+                            @Override
+                            public void onBannerClick(BannerView bannerAdView) {
+                                Log.v(TAG, "onBannerClick: " + bannerAdView.getPlacementId());
+                            }
+                            @Override
+                            public void onBannerLeftApplication(BannerView bannerAdView) {
+                                Log.v(TAG, "onBannerLeftApplication: " + bannerAdView.getPlacementId());}};
+                        bannerview = new BannerView(activity, unityBannerId, new UnityBannerSize(320, 50));
+                        bannerview.setListener(bannerListener);
+                        bannerview.load();
+                        unitylyt.addView(bannerview);
+
+                        break;
+
+
                     case Constant.NONE:
                         //do nothing
                         break;
@@ -270,6 +303,35 @@ public class BannerAd {
                             Log.d(TAG, "IronSource.createBanner returned null");
                         }
                         break;
+
+
+                    case Constant.UNITY:
+                        RelativeLayout unitylyt = activity.findViewById(R.id.unity_banner_view_container);
+                        BannerView.IListener bannerListener = new BannerView.IListener() {
+                            @Override
+                            public void onBannerLoaded(BannerView bannerAdView) {
+                                Log.v(TAG, "onBannerLoaded: " + bannerAdView.getPlacementId());
+                                unitylyt.setVisibility(View.VISIBLE);
+                            }
+                            @Override
+                            public void onBannerFailedToLoad(BannerView bannerAdView, BannerErrorInfo errorInfo) {
+                                Log.e(TAG, "Unity Ads failed to load banner for " + bannerAdView.getPlacementId() + " with error: [" + errorInfo.errorCode + "] " + errorInfo.errorMessage);
+                                unitylyt.setVisibility(View.GONE);
+                            }
+                            @Override
+                            public void onBannerClick(BannerView bannerAdView) {
+                                Log.v(TAG, "onBannerClick: " + bannerAdView.getPlacementId());
+                            }
+                            @Override
+                            public void onBannerLeftApplication(BannerView bannerAdView) {
+                                Log.v(TAG, "onBannerLeftApplication: " + bannerAdView.getPlacementId());}};
+                        bannerview = new BannerView(activity, unityBannerId, new UnityBannerSize(320, 50));
+                        bannerview.setListener(bannerListener);
+                        bannerview.load();
+                        unitylyt.addView(bannerview);
+
+                        break;
+
                 }
                 Log.d(TAG, "Banner Ad is enabled");
             } else {

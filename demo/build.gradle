@@ -5,7 +5,7 @@ plugins {
 android {
     compileSdk 33
     defaultConfig {
-        applicationId "com.tvindonesia.lengkap.online"
+        applicationId "com.cbt.exam.browser"
         minSdk 21
         targetSdk 33
         versionCode 6
@@ -38,4 +38,5 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
     implementation project(':library')
+  //  implementation 'com.unity3d.ads:unity-ads:4.5.0'
 }
