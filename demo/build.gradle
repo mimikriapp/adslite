@@ -5,7 +5,7 @@ plugins {
 android {
     compileSdk 33
     defaultConfig {
-        applicationId "com.cbt.exam.browser"
+        applicationId "com.mimikri.adslite"
         minSdk 21
         targetSdk 33
         versionCode 6
